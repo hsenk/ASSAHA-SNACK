@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Assaha — Menu</title>
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Marcellus&display=swap" rel="stylesheet">
+
+  <style>
+    /* ----- Base ----- */
+    :root{
+      --bg:#f5f2e8;
+      --parchment-url: url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRRnxfZj2UdD9pJMLl7bpQAGkiaXQ0wrue8ng&s');
+      --accent:#7c3b1e;
+      --accent-dark:#a05a2c;
+      --gold:#d8b97d;
+      --text:#3b2f2f;
+      --muted:#6b4226;
+    }
+
+    html,body{
+      height:100%;
+      margin:0;
+      background: var(--bg) var(--parchment-url) repeat;
+      color:var(--text);
+      font-family: "Marcellus", serif;
+      -webkit-font-smoothing:antialiased;
+      -moz-osx-font-smoothing:grayscale;
+    }
+
+    /* ----- Header ----- */
+    .header{
+      position:relative;
+      height:220px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      text-align:center;
+      background: url('https://lebanonuntravelled.com/wp/wp-content/uploads/2022/08/photo_5883987896124422409_y.jpg') center/cover no-repeat;
+    }
+    .header::before{
+      content:"";
+      position:absolute;inset:0;
+      background:rgba(0,0,0,0.54);
+    }
+    .header h1{
+      position:relative;
+      z-index:1;
+      margin:0;
+      font-family: "Amiri", serif;
+      color:#fff6e5;
+      font-size:2.8rem;
+      letter-spacing:0.6px;
+      text-shadow:0 3px 10px rgba(0,0,0,0.55);
+    }
+
+    /* ----- Nav ----- */
+    nav{
+      display:flex;
+      gap:8px;
+      justify-content:center;
+      padding:10px;
+      background:var(--accent);
+      flex-wrap:wrap;
+    }
+    nav button, nav select{
+      background:transparent;
+      color:#f5e6c9;
+      border:2px solid var(--gold);
+      padding:8px 14px;
+      border-radius:6px;
+      cursor:pointer;
+      font-family:inherit;
+      font-size:15px;
+      transition:all .22s ease;
+    }
+    nav button:hover, nav select:hover{
+      background:var(--gold);
+      color:var(--text);
+    }
+
+    /* ----- Page container ----- */
+    main{
+      max-width:980px;
+      margin:26px auto;
+      padding:0 14px;
+    }
+    .page{
+      display:none;
+      background:rgba(255,255,255,0.96);
+      border:2px solid var(--gold);
+      border-radius:12px;
+      padding:20px;
+      box-shadow:0 6px 20px rgba(0,0,0,0.12);
+    }
+    .page.active{ display:block; }
+
+    .page h2{
+      font-family:"Amiri", serif;
+      color:var(--accent-dark);
+      text-align:center;
+      margin-top:6px;
+      margin-bottom:10px;
+      font-size:1.3rem;
+    }
+
+    .divider{
+      text-align:center;
+      margin:12px 0;
+    }
+    .divider:before{ content:"۞"; color:var(--accent-dark); font-size:18px; }
+
+    /* ----- Menu parts ----- */
+    .part{
+      background:#fffaf3;
+      border-radius:10px;
+      overflow:hidden;
+      margin-bottom:18px;
+      border:2px solid var(--gold);
+    }
+    .part h3 /* header for the block */{
+      margin:0;
+      padding:14px;
+      background:var(--accent-dark);
+      color:white;
+      font-family:"Amiri", serif;
+      font-size:1.15rem;
+      text-align:center;
+      cursor:pointer;
+    }
+    .part h3:hover{ background:#874421; }
+
+    .content{
+      display:none;
+      padding:14px;
+      animation:fadeIn .28s ease;
+    }
+
+    .section-title{
+      font-size:1.05rem;
+      color:var(--text);
+      border-bottom:1px solid var(--gold);
+      padding-bottom:6px;
+      margin:8px 0 10px;
+      font-family:inherit;
+    }
+
+    ul.menu-list{
+      list-style:none;
+      padding:0;
+      margin:0 0 6px;
+    }
+    ul.menu-list li{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      padding:8px 2px;
+      border-bottom:1px dashed rgba(120,95,60,0.25);
+      font-size:1rem;
+    }
+
+    /* Order ensures Arabic sits left-of-price (middle column) */
+    .item-name{ order:1; flex:1; text-align:left; }
+    .item-arabic{ order:2; margin:0 12px; white-space:nowrap; color:var(--muted); font-family:"Amiri", serif; direction:rtl; }
+    .item-price{ order:3; min-width:86px; text-align:right; font-weight:700; color:var(--accent); }
+
+    li:hover{ background:#fdf4e5; }
+
+    /* Small screens */
+    @media (max-width:620px){
+      .header{ height:160px; }
+      .header h1{ font-size:1.9rem; }
+      ul.menu-list li{ flex-direction:column; align-items:flex-start; gap:4px; }
+      .item-arabic, .item-price{ text-align:left; margin:0; }
+      .item-price{ min-width:auto; }
+      nav{ gap:6px; padding:8px; }
+    }
+
+    /* Print styles */
+    @media print{
+      body{ background:white; }
+      .header{ display:none; }
+      nav{ display:none; }
+      main{ margin:0; padding:0; box-shadow:none; border:none; }
+      .page{ border:none; box-shadow:none; background:white; }
+      .item-price{ color:black; }
+    }
+
+    @keyframes fadeIn {
+      from{ opacity:0; transform:translateY(-6px); }
+      to{ opacity:1; transform:none; }
+    }
+  </style>
+</head>
+<body>
+  <header class="header">
+    <h1>Assaha Snack</h1>
+  </header>
+
+  <nav>
+    <button type="button" onclick="showPage('home')">🏠 Home</button>
+    <button type="button" onclick="showPage('menu')">📜 Menu</button>
+    <select id="currencySelector" onchange="switchCurrency()">
+      <option value="USD" selected>USD ($)</option>
+      <option value="LBP">LBP (ل.ل)</option>
+    </select>
+  </nav>
+
+  <main>
+    <!-- HOME -->
+    <section id="home" class="page active">
+      <h2>About Us</h2>
+      <p>Welcome to <strong>Assaha Lebanese Traditional Village</strong> — a unique journey into heritage where authentic flavors meet timeless architecture. We honour Lebanese hospitality with recipes passed down for generations, serving everything from oven-fresh breads and mezza to sizzling grills.</p>
+      <div class="divider"></div>
+      <p style="text-align:center;"><em>⏰ Open daily: 12:00 PM – 11:00 PM</em></p>
+    </section>
+
+    <!-- MENU -->
+    <section id="menu" class="page">
+      <!-- Sandwiches -->
+      <article class="part">
+        <h3 onclick="togglePart(this)">Sandwiches</h3>
+        <div class="content">
+          <div class="section-title">Chicken</div>
+          <ul class="menu-list">
+            <li><span class="item-name">Chicken (Large)</span><span class="item-arabic">دجاج (كبير)</span><span class="item-price" data-price="4.00"></span></li>
+            <li><span class="item-name">Chicken (Medium)</span><span class="item-arabic">دجاج (وسط)</span><span class="item-price" data-price="2.50"></span></li>
+            <li><span class="item-name">Tawouk (Large)</span><span class="item-arabic">طاووق (كبير)</span><span class="item-price" data-price="5.00"></span></li>
+            <li><span class="item-name">Tawouk (Medium)</span><span class="item-arabic">طاووق (وسط)</span><span class="item-price" data-price="3.00"></span></li>
+            <li><span class="item-name">Chicken Liver (Large)</span><span class="item-arabic">سودة دجاج (كبير)</span><span class="item-price" data-price="3.50"></span></li>
+            <li><span class="item-name">Chicken Liver (Medium)</span><span class="item-arabic">سودة دجاج (وسط)</span><span class="item-price" data-price="2.50"></span></li>
+            <li><span class="item-name">Chicken Shawarma (Small)</span><span class="item-arabic">شاورما دجاج (صغير)</span><span class="item-price" data-price="4.00"></span></li>
+            <li><span class="item-name">Fajita</span><span class="item-arabic">فاهيتا</span><span class="item-price" data-price="6.00"></span></li>
+            <li><span class="item-name">Francisco</span><span class="item-arabic">فرانسيسكو</span><span class="item-price" data-price="5.00"></span></li>
+            <li><span class="item-name">Chicken Sub</span><span class="item-arabic">تشيكن ساب</span><span class="item-price" data-price="5.00"></span></li>
+            <li><span class="item-name">Crispy</span><span class="item-arabic">كريسبي</span><span class="item-price" data-price="4.50"></span></li>
+            <li><span class="item-name">Escalope</span><span class="item-arabic">اسكالوب</span><span class="item-price" data-price="4.50"></span></li>
+            <li><span class="item-name">Chicken Burger</span><span class="item-arabic">برجر دجاج</span><span class="item-price" data-price="4.00"></span></li>
+          </ul>
+
+          <div class="section-title">Meat</div>
+          <ul class="menu-list">
+            <li><span class="item-name">Sausage</span><span class="item-arabic">نقانق</span><span class="item-price" data-price="4.50"></span></li>
+            <li><span class="item-name">Sojok</span><span class="item-arabic">سجق</span><span class="item-price" data-price="4.50"></span></li>
+            <li><span class="item-name">Nkhaat</span><span class="item-arabic">نخاعات</span><span class="item-price" data-price="5.00"></span></li>
+            <li><span class="item-name">Lsanat</span><span class="item-arabic">لسانات</span><span class="item-price" data-price="5.00"></span></li>
+            <li><span class="item-name">Rosto</span><span class="item-arabic">روستو</span><span class="item-price" data-price="6.00"></span></li>
+            <li><span class="item-name">Philadelphia</span><span class="item-arabic">فيلادلفيا</span><span class="item-price" data-price="7.00"></span></li>
+            <li><span class="item-name">Beef Shawarma (Small)</span><span class="item-arabic">شاورما لحم (صغير)</span><span class="item-price" data-price="5.00"></span></li>
+            <li><span class="item-name">Beef Burger</span><span class="item-arabic">برجر لحم</span><span class="item-price" data-price="5.00"></span></li>
+            <li><span class="item-name">Habra</span><span class="item-arabic">هبرة</span><span class="item-price" data-price="3.50"></span></li>
+          </ul>
+
+          <div class="section-title">Seafood</div>
+          <ul class="menu-list">
+            <li><span class="item-name">Shrimps</span><span class="item-arabic">قريدس</span><span class="item-price" data-price="6.00"></span></li>
+            <li><span class="item-name">Fish Fillet</span><span class="item-arabic">فيليه سمك</span><span class="item-price" data-price="5.00"></span></li>
+            <li><span class="item-name">Fried Fish (Large)</span><span class="item-arabic">سمك مقلي (كبير)</span><span class="item-price" data-price="5.00"></span></li>
+            <li><span class="item-name">Sardibe (Large)</span><span class="item-arabic">سردين (كبير)</span><span class="item-price" data-price="4.00"></span></li>
+          </ul>
+        </div>
+      </article>
+
+      <!-- Other Sandwiches & Hot Items -->
+      <article class="part">
+        <h3 onclick="togglePart(this)">Other Sandwiches & Hot Items</h3>
+        <div class="content">
+          <ul class="menu-list">
+            <li><span class="item-name">French Fries (Large)</span><span class="item-arabic">بطاطا مقلية (كبيرة)</span><span class="item-price" data-price="2.75"></span></li>
+            <li><span class="item-name">French Fries (Small)</span><span class="item-arabic">بطاطا مقلية (صغيرة)</span><span class="item-price" data-price="2.00"></span></li>
+            <li><span class="item-name">French Fries Plate</span><span class="item-arabic">صحن بطاطا</span><span class="item-price" data-price="3.00"></span></li>
+            <li><span class="item-name">French Fries Box</span><span class="item-arabic">علبة بطاطا</span><span class="item-price" data-price="2.00"></span></li>
+            <li><span class="item-name">Fried Vegetables</span><span class="item-arabic">مقالي</span><span class="item-price" data-price="2.50"></span></li>
+            <li><span class="item-name">Vine Leaves</span><span class="item-arabic">ورق عنب</span><span class="item-price" data-price="3.00"></span></li>
+            <li><span class="item-name">Hindbeh</span><span class="item-arabic">هندبة</span><span class="item-price" data-price="2.50"></span></li>
+          </ul>
+        </div>
+      </article>
+
+      <!-- Grilled Chicken -->
+      <article class="part">
+        <h3 onclick="togglePart(this)">Grilled Chicken</h3>
+        <div class="content">
+          <ul class="menu-list">
+            <li><span class="item-name">Rotisserie Chicken (With Garlic & Pickles)</span><span class="item-arabic">فروج غاز</span><span class="item-price" data-price="5.99"></span></li>
+            <li><span class="item-name">1/2 Rotisserie Chicken (With Garlic and Pickles)</span><span class="item-arabic">نصف فروج غاز</span><span class="item-price" data-price="6.50"></span></li>
+            <li><span class="item-name">Rice Plate</span><span class="item-arabic">صحن رز</span><span class="item-price" data-price="4.75"></span></li>
+          </ul>
+        </div>
+      </article>
+
+      <!-- BeitBite -->
+      <article class="part">
+        <h3 onclick="togglePart(this)">BeitBite</h3>
+        <div class="content">
+          <ul class="menu-list">
+            <li><span class="item-name">Hummus</span><span class="item-arabic">حمص</span><span class="item-price" data-price="3.00"></span></li>
+            <li><span class="item-name">Moutabbal</span><span class="item-arabic">متبل</span><span class="item-price" data-price="3.00"></span></li>
+            <li><span class="item-name">Hindbeh</span><span class="item-arabic">هندبة</span><span class="item-price" data-price="3.00"></span></li>
+            <li><span class="item-name">Vine Leaves (Dozen)</span><span class="item-arabic">ورق عنب</span><span class="item-price" data-price="4.00"></span></li>
+            <li><span class="item-name">Fattoush</span><span class="item-arabic">فتوش</span><span class="item-price" data-price="3.00"></span></li>
+            <li><span class="item-name">Tabbbouleh</span><span class="item-arabic">تبولة</span><span class="item-price" data-price="3.00"></span></li>
+            <li><span class="item-name">Rocca Salad</span><span class="item-arabic">سلطة روكا</span><span class="item-price" data-price="3.00"></span></li>
+            <li><span class="item-name">Daily Dish/Stew</span><span class="item-arabic">صحن يومي/يخنة</span><span class="item-price" data-price="8.00"></span></li>
+            <li><span class="item-name">Kebbeh Bel Laban</span><span class="item-arabic">كبة باللبن</span><span class="item-price" data-price="8.00"></span></li>
+            <li><span class="item-name">Chicken Mansaf</span><span class="item-arabic">منسف دجاج</span><span class="item-price" data-price="8.00"></span></li>
+            <li><span class="item-name">Meat Mansaf</span><span class="item-arabic">منسف لحمة</span><span class="item-price" data-price="10.00"></span></li>
+            <li><span class="item-name">Fish Sayadieh</span><span class="item-arabic">صيادية سمك</span><span class="item-price" data-price="10.00"></span></li>
+            <li><span class="item-name">Ghameh</span><span class="item-arabic">غمة</span><span class="item-price" data-price="12.00"></span></li>
+          </ul>
+        </div>
+      </article>
+
+    </section>
+  </main>
+
+  <script>
+    /***********************
+     * Configuration
+     ***********************/
+    const exchangeRate = 90000; // LBP per USD
+
+    /***********************
+     * Utility: show page
+     ***********************/
+    function showPage(id){
+      document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+      const el = document.getElementById(id);
+      if(el) el.classList.add('active');
+    }
+
+    /***********************
+     * Toggle parts (open/close)
+     ***********************/
+    function togglePart(headerEl){
+      const content = headerEl.nextElementSibling;
+      if(!content) return;
+      // simple toggle
+      content.style.display = (content.style.display === 'block') ? 'none' : 'block';
+    }
+
+    // Attach click handlers to existing headers so keyboard users also can toggle
+    document.querySelectorAll('.part h3').forEach(h=>{
+      h.addEventListener('keydown', e=>{
+        if(e.key === 'Enter' || e.key === ' ') togglePart(h);
+      });
+    });
+
+    /***********************
+     * Currency switch
+     ***********************/
+    function switchCurrency(){
+      const sel = document.getElementById('currencySelector');
+      const cur = sel ? sel.value : 'USD';
+      document.querySelectorAll('[data-price]').forEach(span=>{
+        const usd = parseFloat(span.getAttribute('data-price') || '0');
+        if(cur === 'USD'){
+          span.textContent = `$${usd.toFixed(2)}`;
+        } else {
+          // format LBP nicely
+          const lbp = Math.round(usd * exchangeRate);
+          span.textContent = lbp.toLocaleString('en-US') + " ل.ل";
+        }
+      });
+    }
+
+    // Initialize on load
+    window.addEventListener('load', ()=>{
+      // keep all parts closed by default but expand first part to help users
+      document.querySelectorAll('.content').forEach(c=>c.style.display='none');
+      const first = document.querySelector('.content');
+      if(first) first.style.display = 'block';
+
+      switchCurrency();
+    });
+  </script>
+</body>
+</html>
