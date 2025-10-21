@@ -4,12 +4,8 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Assaha — Menu</title>
-
-  <!-- Google Fonts -->
   <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Marcellus&display=swap" rel="stylesheet">
-
   <style>
-    /* ----- Base ----- */
     :root{
       --bg:#f5f2e8;
       --parchment-url: url('https://i.pinimg.com/736x/4c/a2/04/4ca204c27732b9d962bcd11c60394d9c.jpg');
@@ -19,7 +15,6 @@
       --text:#3b2f2f;
       --muted:#6b4226;
     }
-
     html,body{
       height:100%;
       margin:0;
@@ -29,8 +24,6 @@
       -webkit-font-smoothing:antialiased;
       -moz-osx-font-smoothing:grayscale;
     }
-
-    /* ----- Header ----- */
     .header{
       position:relative;
       height:220px;
@@ -55,8 +48,6 @@
       letter-spacing:0.6px;
       text-shadow:0 3px 10px rgba(0,0,0,0.55);
     }
-
-    /* ----- Nav ----- */
     nav{
       display:flex;
       gap:8px;
@@ -80,8 +71,6 @@
       background:var(--gold);
       color:var(--text);
     }
-
-    /* ----- Page container ----- */
     main{
       max-width:980px;
       margin:26px auto;
@@ -105,14 +94,11 @@
       margin-bottom:10px;
       font-size:1.3rem;
     }
-
     .divider{
       text-align:center;
       margin:12px 0;
     }
     .divider:before{ content:"۞"; color:var(--accent-dark); font-size:18px; }
-
-    /* ----- Menu parts ----- */
     .part{
       background:#fffaf3;
       border-radius:10px;
@@ -120,7 +106,7 @@
       margin-bottom:18px;
       border:2px solid var(--gold);
     }
-    .part h3 /* header for the block */{
+    .part h3 {
       margin:0;
       padding:14px;
       background:var(--accent-dark);
@@ -137,7 +123,6 @@
       padding:14px;
       animation:fadeIn .28s ease;
     }
-
     .section-title{
       font-size:1.05rem;
       color:var(--text);
@@ -146,7 +131,6 @@
       margin:8px 0 10px;
       font-family:inherit;
     }
-
     ul.menu-list{
       list-style:none;
       padding:0;
@@ -160,15 +144,11 @@
       border-bottom:1px dashed rgba(120,95,60,0.25);
       font-size:1rem;
     }
-
-    /* Order ensures Arabic sits left-of-price (middle column) */
     .item-name{ order:1; flex:1; text-align:left; }
     .item-arabic{ order:2; margin:0 12px; white-space:nowrap; color:var(--muted); font-family:"Amiri", serif; direction:rtl; }
     .item-price{ order:3; min-width:86px; text-align:right; font-weight:700; color:var(--accent); }
 
     li:hover{ background:#fdf4e5; }
-
-    /* Small screens */
     @media (max-width:620px){
       .header{ height:160px; }
       .header h1{ font-size:1.9rem; }
@@ -177,8 +157,6 @@
       .item-price{ min-width:auto; }
       nav{ gap:6px; padding:8px; }
     }
-
-    /* Print styles */
     @media print{
       body{ background:white; }
       .header{ display:none; }
@@ -187,7 +165,6 @@
       .page{ border:none; box-shadow:none; background:white; }
       .item-price{ color:black; }
     }
-
     @keyframes fadeIn {
       from{ opacity:0; transform:translateY(-6px); }
       to{ opacity:1; transform:none; }
@@ -209,17 +186,13 @@
   </nav>
 
   <main>
-    <!-- HOME -->
     <section id="home" class="page active">
       <h2>About Us</h2>
       <p>Welcome to <strong>Assaha Lebanese Traditional Village</strong> — a unique journey into heritage where authentic flavors meet timeless architecture. We honour Lebanese hospitality with recipes passed down for generations, serving everything from oven-fresh breads and mezza to sizzling grills.</p>
       <div class="divider"></div>
       <p style="text-align:center;"><em>⏰ Open daily: 12:00 PM – 11:00 PM</em></p>
     </section>
-
-    <!-- MENU -->
     <section id="menu" class="page">
-      <!-- Sandwiches -->
       <article class="part">
         <h3 onclick="togglePart(this)">Sandwiches</h3>
         <div class="content">
@@ -262,8 +235,6 @@
           </ul>
         </div>
       </article>
-
-      <!-- Other Sandwiches & Hot Items -->
       <article class="part">
         <h3 onclick="togglePart(this)">Other Sandwiches & Hot Items</h3>
         <div class="content">
@@ -278,8 +249,6 @@
           </ul>
         </div>
       </article>
-
-      <!-- Grilled Chicken -->
       <article class="part">
         <h3 onclick="togglePart(this)">Grilled Chicken</h3>
         <div class="content">
@@ -290,8 +259,6 @@
           </ul>
         </div>
       </article>
-
-      <!-- BeitBite -->
       <article class="part">
         <h3 onclick="togglePart(this)">BeitBite</h3>
         <div class="content">
@@ -317,40 +284,22 @@
   </main>
 
   <script>
-    /***********************
-     * Configuration
-     ***********************/
-    const exchangeRate = 90000; // LBP per USD
-
-    /***********************
-     * Utility: show page
-     ***********************/
+    const exchangeRate = 90000;
     function showPage(id){
       document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
       const el = document.getElementById(id);
       if(el) el.classList.add('active');
     }
-
-    /***********************
-     * Toggle parts (open/close)
-     ***********************/
     function togglePart(headerEl){
       const content = headerEl.nextElementSibling;
       if(!content) return;
-      // simple toggle
       content.style.display = (content.style.display === 'block') ? 'none' : 'block';
     }
-
-    // Attach click handlers to existing headers so keyboard users also can toggle
     document.querySelectorAll('.part h3').forEach(h=>{
       h.addEventListener('keydown', e=>{
         if(e.key === 'Enter' || e.key === ' ') togglePart(h);
       });
     });
-
-    /***********************
-     * Currency switch
-     ***********************/
     function switchCurrency(){
       const sel = document.getElementById('currencySelector');
       const cur = sel ? sel.value : 'USD';
@@ -359,16 +308,13 @@
         if(cur === 'USD'){
           span.textContent = `$${usd.toFixed(2)}`;
         } else {
-          // format LBP nicely
+      
           const lbp = Math.round(usd * exchangeRate);
           span.textContent = lbp.toLocaleString('en-US') + " ل.ل";
         }
       });
     }
-
-    // Initialize on load
     window.addEventListener('load', ()=>{
-      // keep all parts closed by default but expand first part to help users
       document.querySelectorAll('.content').forEach(c=>c.style.display='none');
       const first = document.querySelector('.content');
       if(first) first.style.display = 'block';
